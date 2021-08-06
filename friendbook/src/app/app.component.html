@@ -7,7 +7,135 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<h2>hello world</h2>
+<style>
+  .inputForm {
+    margin-top: 10px;
+  }
+</style>
+<div class="container">
+  <div class="container col-md-6 my-5">
+    <h2>Hello world</h2>
+  </div>
+  <div class="container col-md-6">
+    <!-- novalidate prevents automatic browser validation -->
+    <form #formName="ngForm" (ngSubmit)="submitDetails()" novalidate>
+      <!-- {{ friendModel | json }} -->
+      <div class="mb-3">
+        <input
+          type="text"
+          id="fname"
+          name="First name"
+          placeholder="First Name"
+          class="form-control"
+          [(ngModel)]="friendModel.firstname"
+          required
+          pattern="[a-zA-Z ]+"
+          #firstname="ngModel"
+          [class.is-invalid]="firstname.invalid && firstname.touched"
+        />
+        <!-- Apply the class is invalid when the name is invalid. invalid is the property from ngModel-->
+        <!-- {{firstname.untouched}} -->
+
+      <!-- class binging class.d-none;  d-none is a boostrap class for non displaying the element and the condition we add is that do not display the element if the field is valid or untouched -->
+      <small [class.d-none]="firstname.valid || firstname.untouched">First name is required</small>
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="text"
+          id="lname"
+          name="Last Name"
+          placeholder="Last Name"
+          class="form-control"
+          [(ngModel)]="friendModel.lastname"
+          required
+          pattern="[a-zA-Z ]+"
+          #lastname="ngModel"
+          [class.is-invalid]="lastname.invalid && lastname.touched"
+        />
+        <small [class.d-none]="lastname.valid || lastname.untouched">Last name is required</small>
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="text"
+          id="email"
+          name="Email"
+          placeholder="Email"
+          class="form-control"
+          [(ngModel)]="friendModel.email"
+          required
+          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+          #email="ngModel"
+          [class.is-invalid]="email.invalid && email.touched"
+        />
+        <small [class.d-none]="email.valid || email.untouched">Email is required</small>
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="text"
+          id="phone"
+          name="Phone"
+          placeholder="Phone Number"
+          class="form-control"
+          [(ngModel)]="friendModel.phone"
+          required
+          pattern="[0-9+ ]+"
+          #phone="ngModel"
+          [class.is-invalid]="phone.invalid && phone.touched"
+        />
+        <small [class.d-none]="phone.valid || phone.untouched">Phone is required</small>
+      </div>
+
+      <div class="mb-3">
+      <label for="language">Select your prefered language: </label>
+      <select
+        name="Language"
+        id="language"
+        class="form-select"
+        [(ngModel)]="friendModel.language"
+        required
+        #language="ngModel"
+        [class.is-invalid]="language.invalid && language.touched"
+      >
+        <option class="AppComponent" *ngFor="let language of languages">
+          <!-- [value]="language.id" i removed it from the option html tag becasue it pushes the value of the language into the object, not the name of the language-->
+          {{ language.name }}
+        </option></select>
+        <small [class.d-none]="language.valid || language.untouched">Language is required</small>
+      </div>
+      <!-- button is disabled if the form is invalid -->
+      <button class="btn btn-primary" [disabled]="formName.form.invalid">Submit your details</button>
+    </form>
+  </div>
+
+  <div class="container col-md-9 my-5">
+    <div class="container my-5 table-responsive">
+      <table class="table table-striped  table-responsive">
+        <thead>
+          <tr>
+  
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Preferred Language</th>
+            <th scope="col">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let friend of allFriends" >
+      
+            <td>{{ friend.firstname }} {{ friend.lastname }}</td>
+            <td>{{ friend.email }}</td>
+            <td>{{ friend.phone }}</td>
+            <td>{{ friend.language }}</td>
+            <td><button [value]="friend.email" [id]="friend.email" type="button" class="btn btn-danger" (click)="toggle($event)">Delete</button></td>
+          </tr>
+          </tbody>
+          </table>
+</div>
+</div>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
