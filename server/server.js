@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
+
+const Friend = require('./friendSchema');
 //const bodyParser = require('body-parser');
 
 const app = express();
@@ -9,7 +11,7 @@ app.use(express.json());
 
 //Mongoose connection
 
-mongoose.connect(`mongodb+srv://admin:becode@cluster0.c7kwf.mongodb.net/friendsbook`, {
+mongoose.connect(`mongodb+srv://admin:becode@cluster0.c7kwf.mongodb.net/friendbook`, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true
@@ -28,20 +30,39 @@ mongoose.connection.on("connected", (err, res) => {
 // Below you can define how your API handles a get or a post request.
 // Try sending a get request to the root, you should get a "Hello from server" back.
 
+// Put data to database
+
+app.get('/add-friend', (req, res) => {
+  const friend = new Friend({
+      firstName: 'test',
+      email: 'test@test.com',
+      phone: '12313212312',
+      language: 'html'
+  });
+
+  friend.save()
+      .then((result) => {
+          res.send(result)
+      })
+      .catch((err) => {{
+          console.log(err)
+      }})
+})
+
 app.get('/', function (request, response) {
     response.send('Hello from server');
 });
 
-app.get('/allFriends', function (request, response) {
-    response.send(allFriends);
-});
-app.post('/', function (request, response) {
-    response.status(200).send({"message": "Data received"});
-});
-app.post('/allFriends', function (request, response) {
-    allFriends.push(request.body); 
-    // request.body contains the friend data
-});
+// app.get('/allFriends', function (request, response) {
+//     response.send(allFriends);
+// });
+// app.post('/', function (request, response) {
+//     response.status(200).send({"message": "Data received"});
+// });
+// app.post('/allFriends', function (request, response) {
+//     allFriends.push(request.body); 
+//     // request.body contains the friend data
+// });
 
 
 app.listen(port, function () {});
