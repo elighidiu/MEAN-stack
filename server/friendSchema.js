@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 //Schema that corresponds with Friend class
 const friendSchema  = new Schema({
-    firstName: String,
+    firstname: String,
+    lastname: String,
     email: String,
     phone: String, 
     language: String

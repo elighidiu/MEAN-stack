@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AddFriendService {
-   url = "http://localhost:9005/allFriends";
+   url = "http://localhost:3000/allFriends";
    
   constructor(private http:  HttpClient) { 
    }

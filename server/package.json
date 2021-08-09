@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Eli",
   "license": "ISC",
@@ -15,5 +15,9 @@
     "express": "^4.17.1",
     "mongoose": "^5.13.5",
     "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemod": "^2.8.4"
   }
 }
