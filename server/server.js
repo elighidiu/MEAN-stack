@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
 
 const Friend = require('./friendSchema');
 //const bodyParser = require('body-parser');
@@ -7,7 +8,10 @@ const Friend = require('./friendSchema');
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+// solves the cors error about accessing api from a diffrent link
+app.use(cors({
+    origin: "*",
+}));
 
 //Mongoose connection
 
@@ -42,10 +46,10 @@ app.get('/add-friend', (req, res) => {
 
   friend.save()
       .then((result) => {
-          res.send(result)
+          res.send(result + "for add friend")
       })
       .catch((err) => {{
-          console.log(err)
+          console.log(err + "for add friend")
       }})
 })
 
@@ -53,9 +57,18 @@ app.get('/', function (request, response) {
     response.send('Hello from server');
 });
 
-// app.get('/allFriends', function (request, response) {
-//     response.send(allFriends);
-// });
+// Get data from database
+app.get('/allFriends', (req, res) => {
+    Friend.find()
+        .then((result) => {
+            res.send(result);
+            console.log(result + "for allfriends")
+        })
+        .catch((err) => {
+            console.log(err + "for allfriends")
+        });
+});
+
 // app.post('/', function (request, response) {
 //     response.status(200).send({"message": "Data received"});
 // });
