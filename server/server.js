@@ -42,6 +42,7 @@ app.post('/addFriend', (req, res) => {
     //     language: 'html'
     // });
     const friend = new Friend({
+        _id: new mongoose.Types.ObjectId(),
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
@@ -87,8 +88,8 @@ app.put('/:id', (req, res) => {
 });
 
 // Delete data from database
-app.delete('/:id', (req, res) => {
-    Friend.find()
+app.delete('/deleteFriend/:id', (req, res) => {
+    Friend.deleteOne({ _id: req.params.id })
         .then((result) => {
             res.send(result);
             console.log(result)
