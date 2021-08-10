@@ -1,18 +1,21 @@
 const mongoose = require('mongoose');
 const express = require('express');
-const cors = require('cors');
-
+const bodyParser = require('body-parser');
 const Friend = require('./friendSchema');
-const { request } = require('express');
 
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}) );
 
 // solves the cors error about accessing api from a diffrent link
-app.use(cors({
-    origin: "*",
-}));
+app.use("/*", function(req, res, next){
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    next();
+});
 
 //Mongoose connection
 
@@ -30,16 +33,17 @@ mongoose.connection.on("connected", (err, res) => {
 
 // Create data
 
-app.post('/add-friend', (req, res) => {
+app.post('/addFriend', (req, res) => {
     // const friend = new Friend({
-    //     firstName: 'bu',
+    //     firstname: 'bu',
+    //     lastname: 'hu',
     //     email: 'test@test.com',
     //     phone: '12313212312',
     //     language: 'html'
     // });
     const friend = new Friend({
         firstname: req.body.firstname,
-        firstname: req.body.lastname,
+        lastname: req.body.lastname,
         email: req.body.email,
         phone:  req.body.phone,
         language:  req.body.language
@@ -63,10 +67,10 @@ app.get('/allFriends', (req, res) => {
         Friend.find()
         .then((result) => {
             res.send(result);
-            console.log(result + "for allfriends")
+            console.log(result)
         })
         .catch((err) => {
-            console.log(err + "for allfriends")
+            console.log(err)
         });
 });
 
@@ -75,10 +79,10 @@ app.put('/:id', (req, res) => {
     Friend.find()
         .then((result) => {
             res.send(result);
-            console.log(result + "for allfriends")
+            console.log(result)
         })
         .catch((err) => {
-            console.log(err + "for allfriends")
+            console.log(err)
         });
 });
 
@@ -87,10 +91,10 @@ app.delete('/:id', (req, res) => {
     Friend.find()
         .then((result) => {
             res.send(result);
-            console.log(result + "for allfriends")
+            console.log(result)
         })
         .catch((err) => {
-            console.log(err + "for allfriends")
+            console.log(err)
         });
 });
 
